@@ -4,7 +4,7 @@
 #
 Name     : libevdev
 Version  : 1.4.6
-Release  : 12
+Release  : 13
 URL      : http://www.freedesktop.org/software/libevdev/libevdev-1.4.6.tar.xz
 Source0  : http://www.freedesktop.org/software/libevdev/libevdev-1.4.6.tar.xz
 Summary  : Handler library for evdev events
