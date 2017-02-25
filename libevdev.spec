@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.5.4
-Release  : 19
-URL      : http://www.freedesktop.org/software/libevdev/libevdev-1.5.4.tar.xz
-Source0  : http://www.freedesktop.org/software/libevdev/libevdev-1.5.4.tar.xz
-Source99 : http://www.freedesktop.org/software/libevdev/libevdev-1.5.4.tar.xz.sig
+Version  : 1.5.6
+Release  : 20
+URL      : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz
+Source0  : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz
+Source99 : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz.sig
 Summary  : Handler library for evdev events
 Group    : Development/Tools
 License  : HPND
@@ -84,14 +84,14 @@ lib32 components for the libevdev package.
 
 
 %prep
-%setup -q -n libevdev-1.5.4
+%setup -q -n libevdev-1.5.6
 pushd ..
-cp -a libevdev-1.5.4 build32
+cp -a libevdev-1.5.6 build32
 popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1484342081
+export SOURCE_DATE_EPOCH=1487983003
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -111,6 +111,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
+export SOURCE_DATE_EPOCH=1487983003
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -152,9 +153,9 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libevdev.so.2
-/usr/lib64/libevdev.so.2.1.16
+/usr/lib64/libevdev.so.2.1.18
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libevdev.so.2
-/usr/lib32/libevdev.so.2.1.16
+/usr/lib32/libevdev.so.2.1.18
