@@ -6,7 +6,7 @@
 #
 Name     : libevdev
 Version  : 1.5.6
-Release  : 20
+Release  : 21
 URL      : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz
 Source0  : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz
 Source99 : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz.sig
