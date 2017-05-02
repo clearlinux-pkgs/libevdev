@@ -6,7 +6,7 @@
 #
 Name     : libevdev
 Version  : 1.5.6
-Release  : 21
+Release  : 22
 URL      : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz
 Source0  : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz
 Source99 : http://www.freedesktop.org/software/libevdev/libevdev-1.5.6.tar.xz.sig
@@ -24,6 +24,8 @@ BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
 BuildRequires : pkgconfig(32check)
 BuildRequires : pkgconfig(check)
+BuildRequires : python-dev
+BuildRequires : python3
 BuildRequires : valgrind
 
 %description
@@ -90,8 +92,11 @@ cp -a libevdev-1.5.6 build32
 popd
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1487983003
+export SOURCE_DATE_EPOCH=1493767346
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -107,11 +112,11 @@ popd
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1487983003
+export SOURCE_DATE_EPOCH=1493767346
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
