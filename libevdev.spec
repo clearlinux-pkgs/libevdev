@@ -6,7 +6,7 @@
 #
 Name     : libevdev
 Version  : 1.5.9
-Release  : 27
+Release  : 28
 URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.5.9.tar.xz
 Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.5.9.tar.xz
 Source99 : https://www.freedesktop.org/software/libevdev/libevdev-1.5.9.tar.xz.sig
