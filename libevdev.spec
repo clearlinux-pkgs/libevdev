@@ -24,7 +24,7 @@ BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
 BuildRequires : pkgconfig(32check)
 BuildRequires : pkgconfig(check)
-BuildRequires : python-dev
+
 BuildRequires : python3
 BuildRequires : valgrind
 
