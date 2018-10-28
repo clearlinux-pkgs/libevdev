@@ -5,27 +5,26 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.5.9
-Release  : 29
-URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.5.9.tar.xz
-Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.5.9.tar.xz
-Source99 : https://www.freedesktop.org/software/libevdev/libevdev-1.5.9.tar.xz.sig
+Version  : 1.6.0
+Release  : 30
+URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.6.0.tar.xz
+Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.6.0.tar.xz
+Source99 : https://www.freedesktop.org/software/libevdev/libevdev-1.6.0.tar.xz.sig
 Summary  : Handler library for evdev events
 Group    : Development/Tools
 License  : HPND
-Requires: libevdev-bin
-Requires: libevdev-lib
-Requires: libevdev-doc
+Requires: libevdev-bin = %{version}-%{release}
+Requires: libevdev-lib = %{version}-%{release}
+Requires: libevdev-license = %{version}-%{release}
 BuildRequires : doxygen
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
 BuildRequires : glibc-dev32
 BuildRequires : glibc-libc32
+BuildRequires : pkg-config
 BuildRequires : pkgconfig(32check)
 BuildRequires : pkgconfig(check)
-
-BuildRequires : python3
 BuildRequires : valgrind
 
 %description
@@ -34,6 +33,7 @@ No detailed description available
 %package bin
 Summary: bin components for the libevdev package.
 Group: Binaries
+Requires: libevdev-license = %{version}-%{release}
 
 %description bin
 bin components for the libevdev package.
@@ -42,9 +42,9 @@ bin components for the libevdev package.
 %package dev
 Summary: dev components for the libevdev package.
 Group: Development
-Requires: libevdev-lib
-Requires: libevdev-bin
-Provides: libevdev-devel
+Requires: libevdev-lib = %{version}-%{release}
+Requires: libevdev-bin = %{version}-%{release}
+Provides: libevdev-devel = %{version}-%{release}
 
 %description dev
 dev components for the libevdev package.
@@ -53,25 +53,18 @@ dev components for the libevdev package.
 %package dev32
 Summary: dev32 components for the libevdev package.
 Group: Default
-Requires: libevdev-lib32
-Requires: libevdev-bin
-Requires: libevdev-dev
+Requires: libevdev-lib32 = %{version}-%{release}
+Requires: libevdev-bin = %{version}-%{release}
+Requires: libevdev-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the libevdev package.
 
 
-%package doc
-Summary: doc components for the libevdev package.
-Group: Documentation
-
-%description doc
-doc components for the libevdev package.
-
-
 %package lib
 Summary: lib components for the libevdev package.
 Group: Libraries
+Requires: libevdev-license = %{version}-%{release}
 
 %description lib
 lib components for the libevdev package.
@@ -80,15 +73,24 @@ lib components for the libevdev package.
 %package lib32
 Summary: lib32 components for the libevdev package.
 Group: Default
+Requires: libevdev-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the libevdev package.
 
 
+%package license
+Summary: license components for the libevdev package.
+Group: Default
+
+%description license
+license components for the libevdev package.
+
+
 %prep
-%setup -q -n libevdev-1.5.9
+%setup -q -n libevdev-1.6.0
 pushd ..
-cp -a libevdev-1.5.9 build32
+cp -a libevdev-1.6.0 build32
 popd
 
 %build
@@ -96,12 +98,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522111789
+export SOURCE_DATE_EPOCH=1540764370
 %configure --disable-static
 make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export ASFLAGS="$ASFLAGS --32"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
@@ -114,10 +117,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+cd ../build32;
+make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1522111789
+export SOURCE_DATE_EPOCH=1540764370
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
+cp COPYING %{buildroot}/usr/share/package-licenses/libevdev/COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -144,6 +151,7 @@ popd
 /usr/include/libevdev-1.0/libevdev/libevdev.h
 /usr/lib64/libevdev.so
 /usr/lib64/pkgconfig/libevdev.pc
+/usr/share/man/man3/libevdev.3
 
 %files dev32
 %defattr(-,root,root,-)
@@ -151,16 +159,16 @@ popd
 /usr/lib32/pkgconfig/32libevdev.pc
 /usr/lib32/pkgconfig/libevdev.pc
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man3/*
-
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libevdev.so.2
-/usr/lib64/libevdev.so.2.1.21
+/usr/lib64/libevdev.so.2.2.0
 
 %files lib32
 %defattr(-,root,root,-)
 /usr/lib32/libevdev.so.2
-/usr/lib32/libevdev.so.2.1.21
+/usr/lib32/libevdev.so.2.2.0
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libevdev/COPYING
