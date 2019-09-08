@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.7.0
-Release  : 32
-URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.7.0.tar.xz
-Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.7.0.tar.xz
-Source99 : https://www.freedesktop.org/software/libevdev/libevdev-1.7.0.tar.xz.sig
+Version  : 1.8.0
+Release  : 33
+URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.8.0.tar.xz
+Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.8.0.tar.xz
+Source1 : https://www.freedesktop.org/software/libevdev/libevdev-1.8.0.tar.xz.sig
 Summary  : Wrapper library for evdev devices
 Group    : Development/Tools
 License  : Apache-2.0 HPND
@@ -91,17 +91,19 @@ license components for the libevdev package.
 
 
 %prep
-%setup -q -n libevdev-1.7.0
+%setup -q -n libevdev-1.8.0
 pushd ..
-cp -a libevdev-1.7.0 build32
+cp -a libevdev-1.8.0 build32
 popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1560177936
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1567967518
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -115,14 +117,14 @@ make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %configure --disable-static    --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -131,7 +133,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1560177936
+export SOURCE_DATE_EPOCH=1567967518
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
 cp COPYING %{buildroot}/usr/share/package-licenses/libevdev/COPYING
