@@ -5,12 +5,12 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.9.0
-Release  : 35
-URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.9.0.tar.xz
-Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.0.tar.xz
-Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.0.tar.xz.sig
-Summary  : Wrapper library for evdev devices
+Version  : 1.9.1
+Release  : 36
+URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.9.1.tar.xz
+Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.1.tar.xz
+Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.1.tar.xz.sig
+Summary  : Handler library for evdev events
 Group    : Development/Tools
 License  : Apache-2.0 HPND
 Requires: libevdev-bin = %{version}-%{release}
@@ -47,7 +47,6 @@ Group: Development
 Requires: libevdev-lib = %{version}-%{release}
 Requires: libevdev-bin = %{version}-%{release}
 Provides: libevdev-devel = %{version}-%{release}
-Requires: libevdev = %{version}-%{release}
 Requires: libevdev = %{version}-%{release}
 
 %description dev
@@ -92,10 +91,10 @@ license components for the libevdev package.
 
 
 %prep
-%setup -q -n libevdev-1.9.0
-cd %{_builddir}/libevdev-1.9.0
+%setup -q -n libevdev-1.9.1
+cd %{_builddir}/libevdev-1.9.1
 pushd ..
-cp -a libevdev-1.9.0 build32
+cp -a libevdev-1.9.1 build32
 popd
 
 %build
@@ -103,15 +102,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583161563
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1594924993
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
@@ -135,11 +133,11 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1583161563
+export SOURCE_DATE_EPOCH=1594924993
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
-cp %{_builddir}/libevdev-1.9.0/COPYING %{buildroot}/usr/share/package-licenses/libevdev/5a9e6860301d6944285c7fe35b0c311599974bc1
-cp %{_builddir}/libevdev-1.9.0/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
+cp %{_builddir}/libevdev-1.9.1/COPYING %{buildroot}/usr/share/package-licenses/libevdev/5a9e6860301d6944285c7fe35b0c311599974bc1
+cp %{_builddir}/libevdev-1.9.1/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
