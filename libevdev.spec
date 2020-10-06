@@ -5,17 +5,18 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.9.1
-Release  : 36
-URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.9.1.tar.xz
-Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.1.tar.xz
-Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.1.tar.xz.sig
+Version  : 1.9.901
+Release  : 37
+URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.9.901.tar.xz
+Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.901.tar.xz
+Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.9.901.tar.xz.sig
 Summary  : Handler library for evdev events
 Group    : Development/Tools
 License  : Apache-2.0 HPND
 Requires: libevdev-bin = %{version}-%{release}
 Requires: libevdev-lib = %{version}-%{release}
 Requires: libevdev-license = %{version}-%{release}
+Requires: libevdev-man = %{version}-%{release}
 BuildRequires : buildreq-meson
 BuildRequires : doxygen
 BuildRequires : gcc-dev32
@@ -90,11 +91,19 @@ Group: Default
 license components for the libevdev package.
 
 
+%package man
+Summary: man components for the libevdev package.
+Group: Default
+
+%description man
+man components for the libevdev package.
+
+
 %prep
-%setup -q -n libevdev-1.9.1
-cd %{_builddir}/libevdev-1.9.1
+%setup -q -n libevdev-1.9.901
+cd %{_builddir}/libevdev-1.9.901
 pushd ..
-cp -a libevdev-1.9.1 build32
+cp -a libevdev-1.9.901 build32
 popd
 
 %build
@@ -102,7 +111,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1594924993
+export SOURCE_DATE_EPOCH=1601999471
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -128,16 +137,16 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+make %{?_smp_mflags} check || :
 cd ../build32;
-make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
+make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1594924993
+export SOURCE_DATE_EPOCH=1601999471
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
-cp %{_builddir}/libevdev-1.9.1/COPYING %{buildroot}/usr/share/package-licenses/libevdev/5a9e6860301d6944285c7fe35b0c311599974bc1
-cp %{_builddir}/libevdev-1.9.1/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
+cp %{_builddir}/libevdev-1.9.901/COPYING %{buildroot}/usr/share/package-licenses/libevdev/5a9e6860301d6944285c7fe35b0c311599974bc1
+cp %{_builddir}/libevdev-1.9.901/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -186,3 +195,8 @@ popd
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 /usr/share/package-licenses/libevdev/5a9e6860301d6944285c7fe35b0c311599974bc1
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/libevdev-tweak-device.1
+/usr/share/man/man1/touchpad-edge-detector.1
