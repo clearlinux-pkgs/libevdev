@@ -6,13 +6,13 @@
 #
 Name     : libevdev
 Version  : 1.11.0
-Release  : 41
+Release  : 42
 URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.11.0.tar.xz
 Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.11.0.tar.xz
 Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.11.0.tar.xz.sig
 Summary  : Handler library for evdev events
 Group    : Development/Tools
-License  : Apache-2.0
+License  : Apache-2.0 MIT
 Requires: libevdev-bin = %{version}-%{release}
 Requires: libevdev-lib = %{version}-%{release}
 Requires: libevdev-license = %{version}-%{release}
@@ -111,7 +111,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1612193641
+export SOURCE_DATE_EPOCH=1612207512
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -142,9 +142,10 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1612193641
+export SOURCE_DATE_EPOCH=1612207512
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
+cp %{_builddir}/libevdev-1.11.0/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
 cp %{_builddir}/libevdev-1.11.0/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 pushd ../build32/
 %make_install32
@@ -192,6 +193,7 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
+/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
 /usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 
 %files man
