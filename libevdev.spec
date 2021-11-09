@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.11.0
-Release  : 42
-URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.11.0.tar.xz
-Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.11.0.tar.xz
-Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.11.0.tar.xz.sig
+Version  : 1.12.0
+Release  : 43
+URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.12.0.tar.xz
+Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.0.tar.xz
+Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.0.tar.xz.sig
 Summary  : Handler library for evdev events
 Group    : Development/Tools
 License  : Apache-2.0 MIT
@@ -100,10 +100,10 @@ man components for the libevdev package.
 
 
 %prep
-%setup -q -n libevdev-1.11.0
-cd %{_builddir}/libevdev-1.11.0
+%setup -q -n libevdev-1.12.0
+cd %{_builddir}/libevdev-1.12.0
 pushd ..
-cp -a libevdev-1.11.0 build32
+cp -a libevdev-1.12.0 build32
 popd
 
 %build
@@ -111,20 +111,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1612207512
+export SOURCE_DATE_EPOCH=1636473485
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 pushd ../build32/
-export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig:/usr/share/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
@@ -142,16 +142,22 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1612207512
+export SOURCE_DATE_EPOCH=1636473485
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
-cp %{_builddir}/libevdev-1.11.0/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
-cp %{_builddir}/libevdev-1.11.0/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
+cp %{_builddir}/libevdev-1.12.0/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
+cp %{_builddir}/libevdev-1.12.0/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
 then
 pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
+if [ -d %{buildroot}/usr/share/pkgconfig ]
+then
+pushd %{buildroot}/usr/share/pkgconfig
 for i in *.pc ; do ln -s $i 32$i ; done
 popd
 fi
