@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.12.0
-Release  : 43
-URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.12.0.tar.xz
-Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.0.tar.xz
-Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.0.tar.xz.sig
+Version  : 1.12.1
+Release  : 44
+URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.12.1.tar.xz
+Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.1.tar.xz
+Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.1.tar.xz.sig
 Summary  : Handler library for evdev events
 Group    : Development/Tools
 License  : Apache-2.0 MIT
@@ -30,8 +30,8 @@ BuildRequires : pkgconfig(check)
 BuildRequires : valgrind
 
 %description
-# Doxygen-Bootstrap
-This is a small project for integrating Doxygen output with Twitter Bootstrap.
+libevdev - wrapper library for evdev input devices
+==================================================
 
 %package bin
 Summary: bin components for the libevdev package.
@@ -100,10 +100,10 @@ man components for the libevdev package.
 
 
 %prep
-%setup -q -n libevdev-1.12.0
-cd %{_builddir}/libevdev-1.12.0
+%setup -q -n libevdev-1.12.1
+cd %{_builddir}/libevdev-1.12.1
 pushd ..
-cp -a libevdev-1.12.0 build32
+cp -a libevdev-1.12.1 build32
 popd
 
 %build
@@ -111,7 +111,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1636473485
+export SOURCE_DATE_EPOCH=1648229467
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -142,11 +142,11 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1636473485
+export SOURCE_DATE_EPOCH=1648229467
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
-cp %{_builddir}/libevdev-1.12.0/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
-cp %{_builddir}/libevdev-1.12.0/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
+cp %{_builddir}/libevdev-1.12.1/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
+cp %{_builddir}/libevdev-1.12.1/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -205,4 +205,5 @@ popd
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/libevdev-tweak-device.1
+/usr/share/man/man1/mouse-dpi-tool.1
 /usr/share/man/man1/touchpad-edge-detector.1
