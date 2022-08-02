@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xE23B7E70B467F0BF (office@who-t.net)
 #
 Name     : libevdev
-Version  : 1.12.1
-Release  : 44
-URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.12.1.tar.xz
-Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.1.tar.xz
-Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.12.1.tar.xz.sig
+Version  : 1.13.0
+Release  : 45
+URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.13.0.tar.xz
+Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.13.0.tar.xz
+Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.13.0.tar.xz.sig
 Summary  : Handler library for evdev events
 Group    : Development/Tools
 License  : Apache-2.0 MIT
@@ -100,10 +100,10 @@ man components for the libevdev package.
 
 
 %prep
-%setup -q -n libevdev-1.12.1
-cd %{_builddir}/libevdev-1.12.1
+%setup -q -n libevdev-1.13.0
+cd %{_builddir}/libevdev-1.13.0
 pushd ..
-cp -a libevdev-1.12.1 build32
+cp -a libevdev-1.13.0 build32
 popd
 
 %build
@@ -111,7 +111,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1648229467
+export SOURCE_DATE_EPOCH=1659450767
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -142,11 +142,11 @@ cd ../build32;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1648229467
+export SOURCE_DATE_EPOCH=1659450767
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
-cp %{_builddir}/libevdev-1.12.1/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
-cp %{_builddir}/libevdev-1.12.1/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
+cp %{_builddir}/libevdev-%{version}/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac
+cp %{_builddir}/libevdev-%{version}/doc/style/LICENSE %{buildroot}/usr/share/package-licenses/libevdev/5a48bb048772f9029b604fbdd869d92fddae1cef
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
