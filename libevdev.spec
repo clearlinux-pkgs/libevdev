@@ -7,7 +7,7 @@
 #
 Name     : libevdev
 Version  : 1.13.1
-Release  : 46
+Release  : 47
 URL      : https://www.freedesktop.org/software/libevdev/libevdev-1.13.1.tar.xz
 Source0  : https://www.freedesktop.org/software/libevdev/libevdev-1.13.1.tar.xz
 Source1  : https://www.freedesktop.org/software/libevdev/libevdev-1.13.1.tar.xz.sig
@@ -117,7 +117,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1683298592
+export SOURCE_DATE_EPOCH=1685637424
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -160,7 +160,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1683298592
+export SOURCE_DATE_EPOCH=1685637424
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libevdev
 cp %{_builddir}/libevdev-%{version}/COPYING %{buildroot}/usr/share/package-licenses/libevdev/408b8caca51347634ebeb7be4bf8a1e8b782adac || :
@@ -200,7 +200,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libevdev.so
 /usr/include/libevdev-1.0/libevdev/libevdev-uinput.h
 /usr/include/libevdev-1.0/libevdev/libevdev.h
 /usr/lib64/libevdev.so
@@ -215,7 +214,6 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libevdev.so.2
 /V3/usr/lib64/libevdev.so.2.3.0
 /usr/lib64/libevdev.so.2
 /usr/lib64/libevdev.so.2.3.0
