@@ -2,6 +2,10 @@ option('tests',
        type: 'feature',
        value: 'enabled',
        description: 'Build the tests')
+option('tools',
+       type: 'feature',
+       value: 'enabled',
+       description: 'Build the tools')
 option('documentation',
        type: 'feature',
        value: 'enabled',
